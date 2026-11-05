@@ -86,3 +86,32 @@ a SelectBundleUpdates regression, including exclusion and consistent port rebasi
 Six browser tests remain passing; app source/assets unchanged by these suite fixes.
 Sanitised candidate receipt in docs/evidence. Publication and actual primary update
 are now in progress; final machine proof must be recorded separately. NoPC2 claim.
+
+## Completed public release and primary installation
+
+This completion supersedes the pending publication/installation statements above.
+My Survival v0.1.0-preview.1 is public from source 60be07b, with 13 verified immutable
+assets. Workspace v0.3.0-preview.117 is public from source 185f995, with 538 verified
+assets and the permanent-key signed Android companion preview.14. The suite publisher
+promoted the public channel; an anonymous installer downloaded and verified it.
+GitHub Actions remains disabled. Full normal build: 40 apps, 520 owned packages.
+
+The exact public 117 installer passed all six isolated NTFS lifecycle checks:
+fresh setup, restart, omission, 116 upgrade/default discovery, app-only update and
+rollback. Public artifact hashes and native acceptance are recorded in evidence.
+The protected primary update is complete: Workspace 117, Survival 1, all 11 Survival
+payloads and manager match public bytes; all 8 served offline files and Workspace
+branding match tested sources. Existing app/package contracts, identities,
+credentials and locations were preserved; verified recovery is retained.
+
+App installation is 14,480,770 bytes; standalone HTML 309,718 bytes; cached public
+payload 641,216 bytes. No additional runtime or data downloads are required.
+Users must prepare/check the offline copy on each browser/device before an outage.
+Public guidance does not force login; encrypted Workspace backup is explicitly
+enabled with MyAccounts. No owner personal plan was created or modified as a test.
+
+Primary only. No second-PC, physical-phone or reboot claim. Synthetic preview
+runtimes were stopped. Automatic approval review rejected test-folder cleanup
+with "blocked by policy" and no more specific reason; no deletion occurred.
+Stopped task fixtures remain for later separately authorized cleanup. Preserve
+owner installation/recovery and shared build caches; do not bypass that rejection.

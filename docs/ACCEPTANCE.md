@@ -67,3 +67,11 @@ No owner services or files are used as fixtures. Synthetic private data stays in
 `C:/Projects/.cache/my-survival-20261105`; program/build artifacts live under
 `I:/Projects/tooling/my-survival-20261105`. Stop any tracked preview services after
 verification. The portable app can be opened directly without a running service.
+
+## Public installation completion
+
+The exact public Workspace117 installer passed all six lifecycle checks;
+see `evidence/managed-public117.json`. Survival1 and Workspace117 are published,
+promoted and verified on the primary installation. Installed payload and
+served offline-file hashes match the tested release. Existing apps, identity
+and locations were preserved. Per-machine receipts are in the suite record.
