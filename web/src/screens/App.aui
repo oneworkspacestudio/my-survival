@@ -1,0 +1,359 @@
+Page Survival
+  Section variant=header
+    Link variant=brand href="#home"
+      Icon name=Shield size=28
+      Stack gap=xs
+        Text variant=brand "My Survival"
+        Text variant=eyebrow "READY, EVEN OFFLINE"
+    Spacer
+    Badge variant=connection $offlineLabel
+    Link variant=apps href=$workspace
+      Icon name=LayoutGrid
+      Text "Apps"
+    Button action=theme label="Toggle dark mode" variant=icon
+      Icon name=$themeIcon
+  Section variant=nav label="Main navigation"
+    Link href="#home"
+      Icon name=Shield
+      Text "Overview"
+    Link href="#handbook"
+      Icon name=BookOpen
+      Text "Handbook"
+    Link href="#supplies"
+      Icon name=Backpack
+      Text "Supplies"
+    Link href="#plan"
+      Icon name=MapPin
+      Text "My plan"
+    Link href="#tools"
+      Icon name=Wrench
+      Text "Tools"
+    Link href="#settings"
+      Icon name=Settings
+      Text "Offline & backup"
+    Card variant=sidebar
+      Icon name=WifiOff
+      Text "Prepared before you need it."
+      Text variant=muted "Save this app, test it offline, and keep a paper copy."
+  Section variant=content id=content
+    If condition=$notice
+      Alert $notice
+    If condition=$error
+      Alert variant=error $error
+    If condition=$home
+      Row variant=page-top
+        Text variant=eyebrow "YOUR EVERYDAY EMERGENCY COMPANION"
+        Badge "UK edition · $reviewed"
+      Card variant=hero
+        Stack gap=md
+          Badge variant=mint "A little preparation. More peace of mind."
+          Heading level=1 "Ready for the unexpected."
+          Text variant=paragraph "Practical guidance and your household essentials, together in one small app. Built to stay useful when the lights go out."
+          Row gap=sm
+            Link variant=primary href="#handbook"
+              Icon name=BookOpen
+              Text "Open the handbook"
+            Link variant=hero href="#plan" "Make my plan"
+        Section variant=hero-art
+          Icon name=Shield size=120
+          Text variant=eyebrow "STAY CALM · TAKE THE NEXT STEP"
+      Row variant=section-title
+        Heading level=2 "What’s happening?"
+        Text variant=muted "Start here if you need help now"
+      Grid variant=emergencies
+        For each=$quick
+          Button variant=emergency intent=guide value=$item.id
+            Icon name=$item.icon size=27
+            Stack gap=xs
+              Text variant=strong $item.label
+              Text variant=muted $item.detail
+            Icon name=ChevronRight size=18
+      Alert variant=urgent "Immediate danger in the UK? Call 999 or 112. Calls need a working phone network. Follow local emergency instructions."
+      Grid variant=split
+        Card
+          Row variant=section-title
+            Heading level=2 "Your household readiness"
+            Link href="#supplies" "View supplies →"
+          Text variant=muted $planState
+          Grid variant=metrics
+            Metric value=$waterStored label="litres recorded"
+            Metric value=$waterTarget label="litres planned"
+            Metric value=$kitProgress label="kit checks complete"
+          Text variant=muted "Drinking water starts at 3 litres per person per day; add other needs. Recorded quantities are not a safety assessment."
+        Card variant=soft
+          Icon name=Radio size=28
+          Heading level=2 "Information you can rely on"
+          Text variant=paragraph "Read concise, sourced guidance without a connection. Use a battery radio for current local instructions."
+          Link href="#settings" "Check offline readiness →"
+    If condition=$handbook
+      Text variant=eyebrow "KNOW WHAT TO DO"
+      Heading level=1 "The offline handbook"
+      Text variant=paragraph "Plain-language steps for everyday disruption and serious emergencies. General guidance, not live alerts or a substitute for first-aid training."
+      Row variant=filters
+        Input name=query type=search label="Search handbook" placeholder="Search: water, bleeding, power, shelter…"
+        Select name=category label="Guide category" options=$categories
+        Button action=favorites pressed=$onlyFavorites "Saved guides"
+      Text variant=muted $resultCount
+      Grid variant=guides
+        For each=$results
+          Button variant=guide intent=guide value=$item.id
+            Row
+              Icon name=$item.icon size=26
+              Spacer
+              Text variant=eyebrow $item.category
+            Heading level=2 $item.title
+            Text variant=muted $item.summary
+            Row
+              Text variant=small $item.source
+              Spacer
+              Icon name=ChevronRight size=18
+      If condition=$noResults
+        Card
+          Heading level=2 "No matching guides"
+          Text "Try a shorter search or choose All topics. Saved guides appear when your plan is open."
+    If condition=$article
+      Row
+        Link href="#handbook"
+          Icon name=ArrowLeft
+          Text "All guides"
+        Spacer
+        Button action=bookmark pressed=$isBookmarked
+          Icon name=Bookmark
+          Text $bookmarkLabel
+        Button action=printGuide
+          Icon name=Printer
+          Text "Print"
+      Section variant=article
+        Text variant=eyebrow $guide.category
+        Heading level=1 $guide.title
+        Text variant=paragraph $guide.summary
+        Alert variant=urgent $guide.urgent
+        Stack gap=lg
+          For each=$steps
+            Row variant=step
+              Badge variant=number $item.number
+              Text variant=paragraph $item.text
+        Card variant=caution
+          Heading level=2 "Keep in mind"
+          Text variant=paragraph $guide.avoid
+        Divider
+        Text variant=muted "Original summary checked against the source on $reviewed. This app has not had independent clinical review. Local instructions take priority."
+        Link variant=source href=$guide.url "Source: $guide.source ↗ (internet needed)"
+    If condition=$supplies
+      Text variant=eyebrow "BUILD IT GRADUALLY"
+      Heading level=1 "Supplies & go-bag"
+      Text variant=paragraph "Start with what you already have. Keep quantities and dates current; review food, medicines and water instructions separately."
+      If condition=$locked
+        Alert "Your saved plan is locked. Unlock it in Offline & backup to see or change supplies. The handbook stays available."
+        Link variant=primary href="#settings" "Unlock my plan"
+      Else
+        Grid variant=split
+          Card
+            Heading level=2 "Water planner"
+            Grid variant=three
+              Field label="People"
+                Input name=people type=number min=1 max=100 step=1
+              Field label="Days"
+                Input name=days type=number min=1 max=365 step=1
+              Field label="Extra litres (total)"
+                Input name=extraWater type=number min=0 max=100000 step=0.5
+            Button action=saveHousehold variant=primary "Update household"
+            Grid variant=metrics
+              Metric value=$waterTarget label="litres needed"
+              Metric value=$waterStored label="litres recorded"
+              Metric value=$waterShort label="litres to add"
+            Text variant=muted "3 L × people × days + extra. Extra covers cooking, washing, pets and individual needs. Past-date water is excluded from this count; inspect all stock. Do not use this to limit intake."
+          Card
+            Row variant=section-title
+              Heading level=2 "Go-bag checklist"
+              Badge $kitProgress
+            For each=$checklist
+              Checkbox value=$item.id checked=$item.checked label=$item.title detail=$item.detail
+        Card
+          Heading level=2 "Add a supply"
+          Grid variant=form
+            Field label="Item name"
+              Input name=supplyName placeholder="e.g. Bottled drinking water" maxLength=200
+            Field label="Category"
+              Select name=supplyCategory options=$supplyCategories
+            Field label="Quantity"
+              Input name=supplyQuantity type=number min=0 step=0.1
+            Field label="Unit"
+              Select name=supplyUnit options=$units
+            Field label="Check / expiry date"
+              Input name=supplyExpires type=date
+            Field label="Stored where?"
+              Input name=supplyLocation placeholder="Hall cupboard" maxLength=200
+          Button action=addSupply variant=primary
+            Icon name=Plus
+            Text "Add supply"
+        Heading level=2 "Your inventory"
+        If condition=$noSupplies
+          Card "No supplies recorded yet. Add your first item above."
+        For each=$inventory
+          Card variant=inventory
+            Icon name=$item.icon
+            Stack gap=xs
+              Text variant=strong $item.name
+              Text variant=muted $item.detail
+            Spacer
+            Badge $item.expiry
+            Button variant=icon intent=deleteSupply value=$item.id label=$item.removeLabel
+              Icon name=Trash2
+    If condition=$planPage
+      Text variant=eyebrow "PEOPLE FIRST"
+      Heading level=1 "Your household plan"
+      Text variant=paragraph "Agree it together. Keep the most important details on paper too. These are your notes, not verified evacuation routes or live shelter information."
+      If condition=$locked
+        Alert "Unlock your saved plan before viewing personal details."
+        Link variant=primary href="#settings" "Unlock my plan"
+      Else
+        Row
+          Badge $saveStatus
+          Spacer
+          Button action=printPlan
+            Icon name=Printer
+            Text "Print household plan"
+        Grid variant=split
+          Card
+            Heading level=2 "Where we’ll go"
+            Field label="Nearby meeting point"
+              Input name=meeting placeholder="A place everyone knows"
+            Field label="Backup meeting point"
+              Input name=backupMeeting placeholder="Outside your neighbourhood"
+            Field label="Routes, transport & assistance"
+              Input name=route multiline=true placeholder="Plan A, plan B, who helps whom…"
+            Field label="Local radio stations & frequencies"
+              Input name=radio placeholder="Write these down before an outage"
+          Card
+            Heading level=2 "Our particular needs"
+            Field label="Medicines & medical equipment plan"
+              Input name=medical multiline=true placeholder="Prescribed medicines, allergies, clinician contacts, backup power…"
+            Field label="Children, pets & accessibility"
+              Input name=pet multiline=true placeholder="Food, carriers, mobility or communication needs…"
+            Field label="Other essential notes"
+              Input name=notes multiline=true placeholder="Documents, keys, utility contacts…"
+        Button action=savePlan variant=primary "Save plan changes"
+        Card
+          Heading level=2 "Emergency contacts"
+          Text variant=muted "UK emergency services: 999 / 112. Great Britain power cuts: 105. Northern Ireland: 03457 643 643. Store your local numbers before travelling."
+          Grid variant=three
+            Field label="Contact name"
+              Input name=contactName maxLength=200
+            Field label="Phone number"
+              Input name=contactPhone type=tel maxLength=100
+            Field label="Role / notes"
+              Input name=contactNote maxLength=1000
+          Button action=addContact "Add contact"
+          For each=$contacts
+            Row variant=contact
+              Stack gap=xs
+                Text variant=strong $item.name
+                Text variant=muted $item.note
+              Spacer
+              Link href=$item.tel $item.phone
+              Button variant=icon intent=deleteContact value=$item.id label=$item.removeLabel
+                Icon name=Trash2
+    If condition=$tools
+      Text variant=eyebrow "SIMPLE, USEFUL, OFFLINE"
+      Heading level=1 "Tools for disruption"
+      Grid variant=split
+        Card
+          Icon name=Zap size=28
+          Heading level=2 "Power-cut log"
+          Text variant=muted "A timestamp for your records. It cannot determine food safety or guarantee that power will return."
+          Text variant=timer $outageElapsed
+          Text variant=small $outageStarted
+          Row
+            Button action=startOutage disabled=$locked variant=primary "Record power cut now"
+            Button action=endOutage disabled=$locked "Power restored"
+          Link href="#guide/food" "Read food safety guidance →"
+        Card
+          Icon name=Radio size=28
+          Heading level=2 "Battery runtime estimate"
+          Grid variant=three
+            Field label="Battery capacity (Wh)"
+              Input name=wh type=number min=0
+            Field label="Load (watts)"
+              Input name=watts type=number min=0.1 step=0.1
+            Field label="Usable efficiency (%)"
+              Input name=efficiency type=number min=1 max=100
+          Text variant=timer $runtime
+          Text variant=muted "Wh × efficiency ÷ watts. Real results depend on battery age, temperature and peak loads. Never use this estimate to plan life-support power. Ask the equipment provider."
+        Card
+          Icon name=MapPin size=28
+          Heading level=2 "Coordinates, if available"
+          Text variant=paragraph $location
+          Button action=locate "Get my coordinates"
+          Text variant=muted "Only requested when you tap. GPS may work offline but is not guaranteed. Accuracy is shown; this does not provide maps, routing or a safe location. Coordinates are not saved."
+        Card
+          Icon name=BookOpen size=28
+          Heading level=2 "Incident notes"
+          Field label="Observation or official instruction"
+            Input name=journalText multiline=true placeholder="Record what happened, who gave advice and when…" maxLength=4000
+          Button action=addJournal disabled=$locked "Add timestamped note"
+          For each=$journal
+            Row variant=journal
+              Stack gap=xs
+                Text variant=small $item.when
+                Text $item.text
+              Button variant=icon intent=deleteJournal value=$item.id label="Delete note"
+                Icon name=Trash2
+    If condition=$settings
+      Text variant=eyebrow "PREPARE WHILE YOU’RE CONNECTED"
+      Heading level=1 "Offline & backup"
+      Grid variant=split
+        Card
+          Icon name=WifiOff size=28
+          Heading level=2 "Keep it with you"
+          Badge $offlineLabel
+          Text variant=paragraph $offlineDetail
+          Button action=offline variant=primary "Check offline copy"
+          Button action=downloadPortable "Download portable offline app"
+          Text variant=muted "On a phone, open the HTTPS app once and use your browser’s Install app / Add to Home Screen. Wait for Offline ready, then test in airplane mode. A portable HTML copy can also be kept on a computer or USB drive."
+          Text variant=muted "Browser storage may be cleared or evicted. Keep an encrypted export and a paper plan. Source links, calls and Workspace backups require connectivity. No live alerts or offline map pack is included."
+          Text variant=small "Handbook sources checked: $reviewed. Source organisations have not endorsed this app."
+        Card
+          Icon name=Lock size=28
+          Heading level=2 "Your private plan"
+          Badge $saveStatus
+          Text variant=paragraph "Plan details are session-only until you enable encrypted saving. A passphrase protects the saved copy on this browser. It cannot be recovered if forgotten."
+          Field label="Plan passphrase"
+            Input name=password type=password maxLength=200
+          If condition=$locked
+            Button action=unlock variant=primary "Unlock saved plan"
+          Else
+            Stack gap=md
+              If condition=$persistent
+                Button action=lock "Save & lock plan"
+              Else
+                Field label="Confirm passphrase"
+                  Input name=passwordConfirm type=password maxLength=200
+                Button action=enableVault variant=primary "Enable encrypted saving"
+          Text variant=muted "Use at least 12 characters. This is separate from MyAccounts. An unlocked plan is visible to anyone using this device; it locks on reload or after 10 minutes without activity."
+      Card
+        Heading level=2 "Take a backup"
+        Text variant=paragraph "Encrypted exports include your supplies, contacts, notes and checklist. Keep the passphrase separately. Import decrypts and validates a backup before you choose whether to replace this plan."
+        Row
+          Button action=export disabled=$locked "Export encrypted backup"
+          Button action=printPlan disabled=$locked "Print household plan"
+        Field label="Encrypted backup file (under 1 MB)"
+          Input name=importFile type=file accept=".json,application/json"
+        Button action=import "Preview backup with passphrase"
+        If condition=$pendingImport
+          Alert $importSummary
+          Row
+            Button action=confirmImport variant=primary "Replace plan with this backup"
+            Button action=cancelImport "Cancel import"
+      Card
+        Heading level=2 "Optional Workspace backup"
+        Text variant=paragraph "Explicitly save an encrypted copy to your signed-in MyAccounts identity. The server never receives your plan passphrase. The public handbook does not require sign-in."
+        Row
+          Link href=$loginURL "Sign in to Workspace backup"
+          Button action=serverSave disabled=$locked "Save encrypted copy to Workspace"
+          Button action=serverLoad "Preview Workspace backup"
+        Text variant=muted "Automatic synchronisation is off. Backups do not merge: check the preview before restoring. Server copies use the normal Workspace backup and recovery system."
+    Section variant=footer
+      Text "My Survival · v0.1.0 preview"
+      Text "General guidance. Local emergency instructions come first."
+      Link href="#settings" "Offline status & sources"

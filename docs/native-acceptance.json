@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-05T12:57:58.636Z",
+  "version": "0.1.0-preview.1",
+  "binarySHA256": "f3b8a1513a2d6fbd3fc2d8dfa234b0e89fb522f22673f65d01b66d9604531fb4",
+  "offlineBytes": 641216,
+  "verifiedFiles": 8,
+  "nativePrivateBackup": true,
+  "logoutRevocation": true,
+  "nativeSubpathOfflineReload": true,
+  "phoneViewport": [
+    390,
+    844
+  ],
+  "physicalPhone": false,
+  "managedOIDC": false
+}

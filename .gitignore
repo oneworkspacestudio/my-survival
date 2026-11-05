@@ -1,0 +1,8 @@
+web/node_modules/
+web/src/generated/
+internal/webui/dist/
+dist/
+web/test-results/
+web/playwright-report/
+*.log
+go.work*

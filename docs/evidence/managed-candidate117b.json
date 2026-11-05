@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "passed": true,
+  "upgradeFrom": "0.3.0-preview.116",
+  "installerSHA256": "7737cf0d1e1bffa88cfa50d2403cbb57f81ec654a42655ab513642fab7410f3c",
+  "bundleSHA256": "ac0c2d8acecf7771567c6f60460f054a39349969295d60b9989d11d6673a9c50",
+  "checks": [
+    {
+      "label": "fresh",
+      "workspace": "0.3.0-preview.117",
+      "survival": "0.1.0-preview.1",
+      "oidc": true,
+      "sharedPicker": true,
+      "publicOfflineHandbook": true,
+      "privateAnonymousDenied": true,
+      "encryptedBackupPreserved": true
+    },
+    {
+      "label": "restart",
+      "workspace": "0.3.0-preview.117",
+      "survival": "0.1.0-preview.1",
+      "oidc": true,
+      "sharedPicker": true,
+      "publicOfflineHandbook": true,
+      "privateAnonymousDenied": true,
+      "encryptedBackupPreserved": true
+    },
+    {
+      "label": "fresh-opt-out",
+      "survivalOmitted": true
+    },
+    {
+      "label": "default-discovery-upgrade",
+      "workspace": "0.3.0-preview.117",
+      "survival": "0.1.0-preview.1",
+      "oidc": true,
+      "sharedPicker": true,
+      "publicOfflineHandbook": true,
+      "privateAnonymousDenied": true,
+      "encryptedBackupPreserved": true
+    },
+    {
+      "label": "independent-app-update",
+      "workspace": "0.3.0-preview.117",
+      "survival": "0.1.0-preview.2-test",
+      "oidc": true,
+      "sharedPicker": true,
+      "publicOfflineHandbook": true,
+      "privateAnonymousDenied": true,
+      "encryptedBackupPreserved": true
+    },
+    {
+      "label": "independent-app-rollback",
+      "workspace": "0.3.0-preview.117",
+      "survival": "0.1.0-preview.1",
+      "oidc": true,
+      "sharedPicker": true,
+      "publicOfflineHandbook": true,
+      "privateAnonymousDenied": true,
+      "encryptedBackupPreserved": true
+    }
+  ],
+  "ownerInstallation": false,
+  "physicalPhone": false,
+  "scope": "synthetic isolated native NTFS managed acceptance"
+}

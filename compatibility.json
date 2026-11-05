@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "id": "survival",
+  "route": "/survival",
+  "oidc": true,
+  "version": "0.1.0-preview.1",
+  "workspaceInstallerIntegration": 11,
+  "minimumWorkspaceVersion": "0.3.0-preview.117",
+  "singleExecutable": true,
+  "capabilities": [
+    "offline-survival-v1"
+  ],
+  "publicHandbook": true,
+  "maxOfflineBytes": 20971520,
+  "maxPackageBytes": 157286400
+}

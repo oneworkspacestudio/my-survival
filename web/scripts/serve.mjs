@@ -1,0 +1,6 @@
+import http from 'node:http';import {readFile} from 'node:fs/promises';import path from 'node:path';import {fileURLToPath} from 'node:url';
+const root=path.resolve(fileURLToPath(new URL('../../internal/webui/dist/',import.meta.url)));
+const types={'.html':'text/html','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.json':'application/json','.webmanifest':'application/manifest+json','.png':'image/png'};
+const server=http.createServer(async(req,res)=>{try{const u=new URL(req.url,'http://localhost');if(u.pathname.startsWith('/api/')){res.writeHead(401,{'Content-Type':'application/json'});res.end('{"error":"test host has no account"}');return}let f=decodeURIComponent(u.pathname).replace(/^\/survival\//,'/');if(f==='/')f='/index.html';const target=path.resolve(root,'.'+f);if(!target.startsWith(root+path.sep)){res.writeHead(403);res.end();return}const bytes=await readFile(target);res.writeHead(200,{'Content-Type':types[path.extname(target)]||'application/octet-stream','Cache-Control':'no-cache'});res.end(bytes)}catch{res.writeHead(404);res.end('Not found')}});
+server.listen(5418,'127.0.0.1',()=>console.log('Synthetic preview http://127.0.0.1:5418'));
+for(const signal of ['SIGINT','SIGTERM'])process.on(signal,()=>server.close());
